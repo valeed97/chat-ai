@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ArtifactPanel } from "components/Artifact/Index";
 import { ChatInput } from "components/Chat/ChatInput";
 import ChatMessageList from "components/Chat/ChatMessageList";
@@ -6,6 +6,7 @@ import { Loader2Icon } from "lucide-react";
 import { useScrollAnchor } from "lib/hooks/useScrollAnchor";
 import { sampleMessages } from "lib/SampleMessage";
 import { dummyResponses } from "lib/DummyResponse"
+import { PPTResponse } from "lib/PPTResponse";
 
 const Panel = ({ id }) => {
 
@@ -19,7 +20,7 @@ const Panel = ({ id }) => {
   const [attachments, setAttachments] = useState([]);
   const [selectedArtifacts, setSelectedArtifacts] = useState([]);
   const [isLoading, setIsLoading] = [false]
-
+  const responseIndexRef = useRef(0);
   const generatingResponse = ()=> {setIsLoading(true)};
   const stopGenerating = () => {setIsLoading(false)};
 
@@ -61,9 +62,10 @@ const Panel = ({ id }) => {
     );
   };
 
-  const generateDummyResponse = () => {
-    const randomIndex = Math.floor(Math.random() * dummyResponses.length);
-    return dummyResponses[randomIndex];
+  const generateSequentialResponse = () => {
+    const response = PPTResponse[responseIndexRef.current];
+    responseIndexRef.current = (responseIndexRef.current + 1) % PPTResponse.length;
+    return response;
   };
 
   // Handle sending messages
@@ -87,7 +89,7 @@ const Panel = ({ id }) => {
         const botMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: generateDummyResponse(input),
+        content: generateSequentialResponse(),
         };
         setMessages((prev) => [...prev, botMessage]);
         // setIsLoading(false);

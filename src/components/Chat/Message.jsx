@@ -1,4 +1,4 @@
-
+import React, { useEffect } from "react";
 import AttachmentPreviewButton  from "components/Chat/AttachmentPreviewButton";
 import Markdown from "components/Markdown/Markdown";
 import { Button } from "components/ui/button";
@@ -60,6 +60,11 @@ const MessagePart = ({
   data,
   setCurrentArtifact,
 }) => {
+  useEffect(()=>{
+    if(data.type === "artifact"){
+      setCurrentArtifact(data.data)
+    }
+  },[])
   if (data.type === "text") return <Markdown text={data.data} />;
 
   if (data.type === "artifact")
@@ -67,7 +72,7 @@ const MessagePart = ({
       <Button
         variant="outline"
         className="flex justify-start h-fit w-fit py-0 px-0 my-2"
-        onClick={() => setCurrentArtifact(data.data)}
+        // onClick={setCurrentArtifact(data.data)}
       >
         <div className="w-14 h-full flex items-center justify-center border-r">
           {data.data.generating ? (

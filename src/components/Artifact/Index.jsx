@@ -18,6 +18,7 @@ import { CheckIcon, ClipboardIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { Props as ReactArtifactProps } from "components/Artifact/React";
 import { HTMLArtifact } from "components/Artifact/Html";
+import { useNavigate } from "react-router-dom";
 
 
 const artifactPreviewSupportedTypes = ["text/html", "application/react"];
@@ -32,8 +33,8 @@ export const ArtifactPanel = ({
   onCapture,
   generating,
 }) => {
-  const [mode, setMode] = useState("code");
-
+  const [mode, setMode] = useState("preview");
+  const navigate = useNavigate()
   const { isCopied, copyToClipboard } = useCopyToClipboard({
     timeout: 2000,
   });
@@ -58,9 +59,13 @@ export const ArtifactPanel = ({
                 value={mode}
                 onValueChange={(value) => setMode(value)}
               >
-                <TabsList className="bg-slate-200">
-                  <TabsTrigger value="preview">Preview</TabsTrigger>
-                  <TabsTrigger value="code">Code</TabsTrigger>
+                <TabsList >
+                <button type="button" onClick={(e)=>{
+                  e.preventDefault()
+                  navigate("/finish")
+                }} className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Download</button>
+                  {/* <TabsTrigger className="bg-slate-200" alue="preview">Preview</TabsTrigger> */}
+                  {/* <TabsTrigger value="code">Code</TabsTrigger> */}
                 </TabsList>
               </Tabs>
             )}
