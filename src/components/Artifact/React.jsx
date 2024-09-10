@@ -2,7 +2,7 @@ import SelectionTool from "components/SelectionTool";
 import React, { useEffect, useRef, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-
+import ReactRenderer from "components/renderer/ReactRenderer";
 
 
 export const ReactArtifact = ({ code, mode, recording, onCapture }) => {
@@ -62,12 +62,7 @@ export const ReactArtifact = ({ code, mode, recording, onCapture }) => {
     return (
       <>
         <div ref={contentRef} className="w-full h-full">
-          <iframe
-            ref={iframeRef}
-            src={"http://localhost:3000"}
-            className="w-full h-full"
-            loading="lazy"
-          />
+          <ReactRenderer code={code}/>
         </div>
 
         {recording && iframeLoaded && (

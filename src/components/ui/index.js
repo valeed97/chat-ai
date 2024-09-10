@@ -11,3 +11,4 @@ export * from "./select";
 export * from "./tabs";
 export * from "./textarea";
 export * from "./tooltip";
+export * from "./accordian"

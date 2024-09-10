@@ -44,8 +44,6 @@ export const ArtifactPanel = ({
     copyToClipboard(content);
   };
 
-  console.log({ type, title, language, content });
-
   return (
     <Card className="w-full border-none rounded-none flex flex-col h-full max-h-full">
       <CardHeader className="bg-slate-50 rounded-lg border rounded-b-none py-2 px-4 flex flex-row items-center gap-4 justify-between space-y-0">
