@@ -6,7 +6,7 @@ import Panel from "./Chat/Panel";
 import Downloader from "./downloader/Downloader";
 
 const Layout = ({ children }) => (
-  <div className="flex gap-4 w-full h-screen max-h-screen overflow-hidden px-2 pl-0">
+  <div className="flex gap-4 w-full h-screen max-h-screen overflow-hidden px-2 pl-0 bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-800 ">
     <SideNavBar />
     {children}
   </div>

@@ -1,7 +1,5 @@
-
-export const PPTResponse = [
+export const autoResponse = [
   `
-  Certainly! I'd be happy to help you create a strategy for implementing a sustainable growth plan for the next financial year in the technology operations of motor insurance. I'll present this in the form of a PowerPoint presentation and a PDF document. Let's start with the PowerPoint presentation.
 <artifact identifier="sustainable-growth-strategy" type="application/react" title="Sustainable Growth Strategy Presentation">
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
@@ -196,16 +194,8 @@ const AdvancedPPTSlide = () => {
 
 export default AdvancedPPTSlide;
 </artifact>
-This interactive component allows users to explore a sustainable growth strategy for technology operations in motor insurance. Here's a breakdown of its features:
-  
-1. Slide Navigation: Users can navigate through various slides using "Previous" and "Next" buttons to explore different aspects of the strategy.
-2. Dynamic Content Display: Each slide can include text, bullet points, and graphs, updating in real-time as users navigate through slides.
-3. Slide Content: Each slide presents essential details such as strategic goals, market analysis, technological initiatives, operational efficiency, financial projections, and an implementation roadmap.
-  
-This component helps users visualize and understand a comprehensive growth strategy by presenting information in a structured, interactive format. Users can explore each aspect of the strategy, enhancing their understanding of how different elements contribute to overall growth and success.
     `,
   `
-  Certainly! I'd be happy to help you create a strategy for implementing a sustainable growth plan for the next financial year in the technology operations of motor insurance. I'll present this in the form of a PowerPoint presentation and a PDF document. Let's start with the PowerPoint presentation.
 <artifact identifier="sustainable-growth-strategy" type="application/react" title="Sustainable Growth Strategy for Motor Insurance Tech Operations with AI Value in Motor Insurance">
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
@@ -439,16 +429,8 @@ const AdvancedPPTSlide = () => {
 
 export default AdvancedPPTSlide;
 </artifact>
-This interactive component allows users to explore a sustainable growth strategy for technology operations in motor insurance. Here's a breakdown of its features:
-  
-1. Slide Navigation: Users can navigate through various slides using "Previous" and "Next" buttons to explore different aspects of the strategy.
-2. Dynamic Content Display: Each slide can include text, bullet points, and graphs, updating in real-time as users navigate through slides.
-3. Slide Content: Each slide presents essential details such as strategic goals, market analysis, technological initiatives, operational efficiency, financial projections, and an implementation roadmap.
-  
-This component helps users visualize and understand a comprehensive growth strategy by presenting information in a structured, interactive format. Users can explore each aspect of the strategy, enhancing their understanding of how different elements contribute to overall growth and success.
     `,
   `
-  Certainly! I'd be happy to help you create a strategy for implementing a sustainable growth plan for the next financial year in the technology operations of motor insurance. I'll present this in the form of a PowerPoint presentation and a PDF document. Let's start with the PowerPoint presentation.
 <artifact identifier="sustainable-growth-strategy" type="application/react" title="Sustainable Growth Strategy for Motor Insurance Tech Operations with AI Responsible Use">
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
@@ -705,13 +687,6 @@ const AdvancedPPTSlide = () => {
 
 export default AdvancedPPTSlide;
 </artifact>
-This interactive component allows users to explore a sustainable growth strategy for technology operations in motor insurance. Here's a breakdown of its features:
-  
-1. Slide Navigation: Users can navigate through various slides using "Previous" and "Next" buttons to explore different aspects of the strategy.
-2. Dynamic Content Display: Each slide can include text, bullet points, and graphs, updating in real-time as users navigate through slides.
-3. Slide Content: Each slide presents essential details such as strategic goals, market analysis, technological initiatives, operational efficiency, financial projections, and an implementation roadmap.
-  
-This component helps users visualize and understand a comprehensive growth strategy by presenting information in a structured, interactive format. Users can explore each aspect of the strategy, enhancing their understanding of how different elements contribute to overall growth and success.
     `,
   `
 <artifact identifier="sustainable-growth-strategy" type="application/react" title="Sustainable Growth Strategy for Motor Insurance Tech Operations with AI Tech Enablement">
@@ -1014,12 +989,5 @@ const AdvancedPPTSlide = () => {
 
 export default AdvancedPPTSlide;
 </artifact>
-This interactive component allows users to explore a sustainable growth strategy for technology operations in motor insurance. Here's a breakdown of its features:
-  
-1. Slide Navigation: Users can navigate through various slides using "Previous" and "Next" buttons to explore different aspects of the strategy.
-2. Dynamic Content Display: Each slide can include text, bullet points, and graphs, updating in real-time as users navigate through slides.
-3. Slide Content: Each slide presents essential details such as strategic goals, market analysis, technological initiatives, operational efficiency, financial projections, and an implementation roadmap.
-  
-This component helps users visualize and understand a comprehensive growth strategy by presenting information in a structured, interactive format. Users can explore each aspect of the strategy, enhancing their understanding of how different elements contribute to overall growth and success.
     `,
 ];

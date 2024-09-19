@@ -5,7 +5,9 @@ const ChatMessageList = ({
   messages,
   setCurrentArtifact,
   containerRef,
+  isInteractive
 }) => {
+  console.log("messages", messages)
   return (
     <div
       ref={containerRef}
@@ -20,6 +22,7 @@ const ChatMessageList = ({
             text={message.content}
             attachments={message.experimental_attachments || []}
             setCurrentArtifact={setCurrentArtifact}
+            isInteractive={isInteractive}
           />
 
           {index !== messages.length - 1 && <Separator />}

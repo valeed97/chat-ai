@@ -1,33 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import {
-    ArrowDownIcon,
-    ArrowUpIcon,
-    CircleStopIcon,
-    Loader2Icon,
-    MicIcon,
-    PaperclipIcon,
-    PauseIcon,
-  } from "lucide-react";
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CircleStopIcon,
+  PaperclipIcon,
+} from "lucide-react";
 import Textarea from "react-textarea-autosize";
 import { Button } from "components/ui/button";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "components/ui/select";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-  } from "components/ui";
-
 import { useEnterSubmit } from "lib/hooks/useEnterSubmit";
-import  AttachmentPreviewButton  from "components/Chat/AttachmentPreviewButton";
+import AttachmentPreviewButton from "components/Chat/AttachmentPreviewButton";
 import { convertFileToBase64 } from "lib/utils";
-
 
 export const ChatInput = ({
   input,
@@ -70,7 +52,6 @@ export const ChatInput = ({
     inputRef.current?.focus();
   }, []);
 
-
   return (
     <div className="sticky bottom-0 mx-auto w-full pt-6 flex flex-col gap-4 items-center">
       {showScrollButton && (
@@ -84,7 +65,7 @@ export const ChatInput = ({
         </Button>
       )}
 
-      <div className="w-full flex flex-col gap-1 bg-[#F4F4F4] p-2.5 pl-4 rounded-md border border-b-0 rounded-b-none shadow-md">
+      <div className="w-full flex flex-col gap-1 p-2.5 pl-4 rounded-md bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg shadow-lg border border-white border-opacity-20 rounded-b-none shadow-md">
         {/* Attachment preview */}
         {attachments && (
           <div className="flex items-center gap-2 mb-2">
@@ -105,7 +86,7 @@ export const ChatInput = ({
             tabIndex={0}
             onKeyDown={onKeyDown}
             placeholder="Send a message."
-            className="min-h-15 max-h-96 overflow-auto w-full bg-transparent border-none resize-none focus-within:outline-none"
+            className="min-h-15 max-h-96 overflow-auto w-full bg-transparent border-none resize-none focus-within:outline-none text-white"
             autoFocus
             spellCheck={false}
             autoComplete="off"
@@ -130,44 +111,18 @@ export const ChatInput = ({
           <Button
             variant="outline"
             size="icon"
-            className="w-8 h-8 bg-transparent"
+            className="w-8 h-8 bg-transparent text-white"
             onClick={handleFileUpload}
           >
             <PaperclipIcon className="w-4 h-4" />
           </Button>
 
-          {/* Voice recording button */}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                {/* <Button
-                  onClick={() => (recording ? onStopRecord() : onStartRecord())}
-                  size="icon"
-                  variant="outline"
-                  className="w-8 h-8 bg-transparent disabled:pointer-events-auto"
-                >
-                  {recording ? (
-                    <PauseIcon className="w-4 h-4" />
-                  ) : (
-                    <MicIcon className="w-4 h-4" />
-                  )}
-                </Button> */}
-              </TooltipTrigger>
-              <TooltipContent>
-                {/* <p>
-                  {getSettings().openaiApiKey
-                    ? "Click to record voice and crop artifacts for editing"
-                    : "Missing OpenAI API Key in Settings for Speech to Text"}
-                </p> */}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
           {/* Submit button */}
           <Button
+            variant="outline"
             onClick={isLoading ? stopGenerating : onSubmit}
             size="icon"
-            className="w-8 h-8"
+            className="w-8 h-8 bg-transparent text-white"
           >
             {isLoading ? (
               <CircleStopIcon className="w-4 h-4" />

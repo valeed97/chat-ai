@@ -1,8 +1,8 @@
 import React from 'react';
 import { Download, CheckCircle } from 'lucide-react';
-
+import PPT from "./dummy_ppt.pptx"
 const Downloader = () => {
-    const downloadLink =""
+
   return (
     <div className="w-full bg-white rounded-lg shadow-xl">
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -17,7 +17,7 @@ const Downloader = () => {
           <p className="text-center mb-8 opacity-90">Your PowerPoint presentation is now available.</p>
           <div className="flex justify-center">
             <a
-              href={downloadLink}
+              href={PPT}
               download
               className="flex items-center justify-center px-6 py-3 bg-white text-purple-600 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-opacity-90 hover:shadow-md"
             >

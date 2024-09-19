@@ -1,38 +1,39 @@
-import React, { useState, useRef } from "react";
-import { ArtifactPanel } from "components/Artifact/Index";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom"
+import ArtifactPanel  from "components/Artifact/Index";
 import { ChatInput } from "components/Chat/ChatInput";
 import ChatMessageList from "components/Chat/ChatMessageList";
-import { Loader2Icon } from "lucide-react";
 import { useScrollAnchor } from "lib/hooks/useScrollAnchor";
-import { sampleMessages } from "lib/SampleMessage";
-import { dummyResponses } from "lib/DummyResponse"
 import { PPTResponse } from "lib/PPTResponse";
+import { autoResponse } from "lib/autoResponse";
 
 const Panel = ({ id }) => {
-
   // State management
+  const navigate = useNavigate()
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState(id);
-  const [initialMessages, setInitialMessages] = useState([]);
-  const [fetchingMessages, setFetchingMessages] = useState(false);
   const [currentArtifact, setCurrentArtifact] = useState(null);
   const [attachments, setAttachments] = useState([]);
   const [selectedArtifacts, setSelectedArtifacts] = useState([]);
-  const [isLoading, setIsLoading] = [false]
+  const [isLoading, setIsLoading] = useState(false);
   const responseIndexRef = useRef(0);
-  const generatingResponse = ()=> {setIsLoading(true)};
-  const stopGenerating = () => {setIsLoading(false)};
+  const autoResponseIndexRef = useRef(-1);
+  const generatingResponse = () => {
+    setIsLoading(true);
+  };
+  const stopGenerating = () => {
+    setIsLoading(false);
+  };
+  const [isInteractive, setIsInteractive] = useState(false);
+  const [selectedSubchats, setSelectedSubchats] = useState([]);
 
   // Scroll as new messages are added
   const { messagesRef, scrollRef, showScrollButton, handleManualScroll } =
     useScrollAnchor(messages);
 
   // Handle artifact capture
-  const handleCapture = ({
-    selectionImg,
-    artifactImg,
-  }) => {
+  const handleCapture = ({ selectionImg, artifactImg }) => {
     setAttachments((prev) => [
       ...prev,
       {
@@ -48,57 +49,93 @@ const Panel = ({ id }) => {
   };
 
   // Handle attachment management
-  const handleAddAttachment = (
-    newAttachments
-  ) => {
+  const handleAddAttachment = (newAttachments) => {
     setAttachments((prev) => [...prev, ...newAttachments]);
   };
 
-  const handleRemoveAttachment = (
-    attachment
-  ) => {
+  const handleRemoveAttachment = (attachment) => {
     setAttachments((prev) =>
       prev.filter((item) => item.url !== attachment.url)
     );
   };
 
+  const handleInteractive = (value) => {
+    setIsInteractive(value);
+  };
   const generateSequentialResponse = () => {
     const response = PPTResponse[responseIndexRef.current];
-    responseIndexRef.current = (responseIndexRef.current + 1) % PPTResponse.length;
+    responseIndexRef.current =
+      (responseIndexRef.current + 1) % PPTResponse.length;
     return response;
   };
 
-  // Handle sending messages
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const generateSequentialAutoResponse = () => {
+    const paths = [
+      "/chat/growth-plan",
+      "/chat/linked-ai-value",
+      "/chat/ai-responsible-use", 
+      "/chat/ai-tech-enablement",
+    ]
     
-    const userMessage = {
+    const response = autoResponse[autoResponseIndexRef.current];
+    navigate(paths[autoResponseIndexRef.current])
+    autoResponseIndexRef.current =
+      (autoResponseIndexRef.current + 1) % autoResponse.length;
+    return response;
+  };
+
+  const handleSend = async(index) => {
+    if(isInteractive && !input.trim()) return
+    if(!isInteractive){
+      setSelectedSubchats((prev) => {
+        if (prev.includes(index)) {
+          return prev; // If already selected, do nothing
+        }
+        return [...prev, index]; // Add the new selection
+      });
+    } else {
+      const userMessage = {
         id: Date.now().toString(),
         role: "user",
         content: input,
-    };
+      };
+  
+      setMessages((prev) => [...prev, userMessage]);
+      setInput("");
+      setAttachments([]);
+      setSelectedArtifacts([]);
+    }
 
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setAttachments([]);
-    setSelectedArtifacts([]);
-
-    // Simulate bot response
-    // setIsLoading(true);
+    setIsLoading(true);
     setTimeout(() => {
-        const botMessage = {
+      const botMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: generateSequentialResponse(),
+        content: !isInteractive ? generateSequentialAutoResponse() : generateSequentialResponse(),
+      };
+      setMessages((prev) => [...prev, botMessage]);
+      setIsLoading(false);
+    }, 2000);
+
+  }
+
+  useEffect(() => {
+    if(autoResponseIndexRef.current == 0){
+      setIsLoading(true);
+      setTimeout(() => {
+        const botMessage = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: generateSequentialAutoResponse(),
         };
         setMessages((prev) => [...prev, botMessage]);
-        // setIsLoading(false);
-    }, 1000); 
-
-    setInput("");
-    setAttachments([]);
-    setSelectedArtifacts([]);
-  };
+        setIsLoading(false);
+      }, 1000);
+    }
+    return () => {
+      autoResponseIndexRef.current = autoResponseIndexRef.current + 1
+    };
+  }, []);
 
   return (
     <>
@@ -106,49 +143,46 @@ const Panel = ({ id }) => {
         className="relative flex w-full flex-1 overflow-x-hidden overflow-y-scroll pt-6"
         ref={scrollRef}
       >
-        <div className="relative mx-auto flex h-full w-full min-w-[400px] max-w-3xl flex-1 flex-col md:px-2">
-          {fetchingMessages && <Loader2Icon className="animate-spin mx-auto" />}
-
+        <div className="relative mx-auto flex h-full w-full min-w-[400px] max-w-2xl flex-1 flex-col md:px-2">
           <ChatMessageList
             messages={messages}
             setCurrentArtifact={setCurrentArtifact}
             containerRef={messagesRef}
+            isInteractive={isInteractive}
           />
 
-          <ChatInput
+          {isInteractive ? <ChatInput
             input={input}
             setInput={setInput}
             onSubmit={handleSend}
-            isLoading={generatingResponse}
-            // recording={recording}
-            // onStartRecord={startRecording}
-            // onStopRecord={stopRecording}
+            isLoading={isLoading}
             attachments={attachments}
             onAddAttachment={handleAddAttachment}
             onRemoveAttachment={handleRemoveAttachment}
             showScrollButton={showScrollButton}
             handleManualScroll={handleManualScroll}
             stopGenerating={stopGenerating}
-          />
+          />: null}
         </div>
       </div>
 
       {currentArtifact && (
-        <div className="w-full max-w-xl h-full max-h-full pt-6 pb-4">
-          <ArtifactPanel
-            title={currentArtifact.title}
-            id={currentArtifact.id}
-            type={currentArtifact.type}
-            generating={currentArtifact.generating}
-            content={currentArtifact.content}
-            language={currentArtifact.language}
-            onClose={() => setCurrentArtifact(null)}
-            onCapture={handleCapture}
-          />
-        </div>
+        <ArtifactPanel
+          title={currentArtifact.title}
+          id={currentArtifact.id}
+          type={currentArtifact.type}
+          generating={currentArtifact.generating}
+          content={currentArtifact.content}
+          language={currentArtifact.language}
+          onClose={() => setCurrentArtifact(null)}
+          onCapture={handleCapture}
+          isInteractive={isInteractive}
+          handleInteractive={handleInteractive}
+          handleSubChatClick={handleSend}
+        />
       )}
     </>
   );
 };
 
-export default Panel 
+export default Panel;
